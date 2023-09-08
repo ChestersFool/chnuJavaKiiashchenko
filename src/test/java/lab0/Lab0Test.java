@@ -25,4 +25,10 @@ public class Lab0Test {
     public void testIfTask() {
         assertEquals(new Lab0().ifTask(3.,2.,1.), "1.0, 3.0");
     }
+
+    @Test
+    public void testSwitchTask() {
+        assertEquals(new Lab0().switchTask(1, 1),
+                "a: 1.0; R1: 0.28867513459481287; R2: 0.5773502691896257; S: 0.4330127018922193;");
+    }
 }
