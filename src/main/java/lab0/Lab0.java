@@ -1,6 +1,8 @@
 package lab0;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Lab0 {
 
@@ -12,12 +14,10 @@ public class Lab0 {
      * @return number where second and third digits were first and second.
      * The third digit becomes the first
      */
-    public int integerNumberTask(int number) {
+    public static int integerNumberTask(int number) {
         int rightDigit = (number % 100) % 10;
 
-        number /= 10;
-
-        return rightDigit * 100 + number;
+        return rightDigit * 100 + number / 10;
     }
 
     /**
@@ -27,10 +27,10 @@ public class Lab0 {
      * @param a integer number
      * @param b integer number
      * @param c integer number
-     * @return true, if <font color="red">ONLY ONE</font> number is negative
+     * @return true, if <font color="red">ONLY ONE</font> number is positive
      */
-    public boolean booleanTask(int a, int b, int c) {
-        return (String.valueOf(a) + b + c).split("-").length == 2;
+    public static boolean booleanTask(int a, int b, int c) {
+        return (String.valueOf(a) + b + c).split("-").length == 3;
     }
 
     /**
@@ -41,12 +41,12 @@ public class Lab0 {
      * @param c float number (<code>double</code>)
      * @return the smallest and the biggest number
      */
-    public String ifTask(double a, double b, double c) {
+    public static double[] ifTask(double a, double b, double c) {
         double[] numbers = new double[]{a, b, c};
 
         Arrays.sort(numbers);
 
-        return numbers[0] + ", " + numbers[2];
+        return new double[]{numbers[0], numbers[2]};
     }
 
     /**
@@ -60,7 +60,7 @@ public class Lab0 {
      * @param value  value of the selected variable
      * @return triangle side, R1, R2, S
      */
-    public String switchTask(int number, double value) {
+    public static double[] switchTask(int number, double value) {
         double a, r1, r2, s;
 
         switch (number) {
@@ -95,8 +95,7 @@ public class Lab0 {
                 s = 0;
             }
         }
-
-        return "a: " + a + "; R1: " + r1 + "; R2: " + r2 + "; S: " + s + ";";
+        return new double[]{a, r1, r2, s};
     }
 
     /**
@@ -106,20 +105,116 @@ public class Lab0 {
      * (в результате будут выведены квадраты всех целых чисел от 1 до N).
      *
      * @param n is integer number
-     * @return approximated value of exp(1)
+     * @return n raised to power of two
      */
-    public String forTask(int n) {
+    public static List<Integer> forTask(int n) {
         assert n > 0 : "Argument should be more than zero";
         int sum = 0;
+        ArrayList<Integer> powers = new ArrayList<>();
 
         for (int i = 1; i <= n; i++) {
             sum += 2 * i - 1;
+            powers.add(sum);
         }
 
-        return Integer.toString(sum);
+        return powers;
+    }
+
+    /**
+     * Task: While14. Дано число A (> 1). Вывести наибольшее из целых чисел K,
+     * для которых сумма 1 + 1/2 + … + 1/K будет меньше A, и саму эту сумму.
+     *
+     * @param a
+     * @return
+     */
+    public static String whileTask(double a) {
+        assert a > 1 : "Argument should be more than one";
+
+        int i = 1;
+        double sum = 0;
+
+        while ((sum += (double) 1 / i++) < a) {
+//            sum += 1 / i++;
+        }
+
+        return "K: " + (i - 1) + "; Sum: " + sum;
+    }
+
+    /**
+     * Task: Minmax14. Дано число B (> 0) и набор из десяти чисел. Вывести минимальный из тех элементов набора,
+     * которые больше B, а также его номер. Если чисел, больших B, в наборе нет, то дважды вывести 0.
+     */
+    public static String minmaxTask(double b, double[] numbers) {
+        assert b > 0 : "Argument should be more than zero";
+        assert numbers.length == 10 : "Array need to contains 10 numbers";
+        double minmax = numbers[0];
+        int minmaxIndex = 0;
+
+        for (int i = 1, size = numbers.length; i < size; i++) {
+            if (numbers[i] > b && minmax > numbers[i]) {
+                minmax = numbers[i];
+                minmaxIndex = i;
+            }
+        }
+
+        if (minmax < b) {
+            return "0, 0";
+        }
+
+        return "minmax: " + minmax + "; index: " + minmaxIndex;
+    }
+
+    /**
+     * Task: Array14. Дан массив A размера N. Вывести вначале его элементы с четными номерами
+     * (в порядке возрастания номеров), а затем — элементы с нечетными номерами (также в порядке возрастания номеров):
+     * A2,    A4,    A6,    …,    A1,    A3,    A5,    … .
+     * Условный оператор не использовать.
+     */
+    public static double[] arrayTask(double[] a) {
+        int size = a.length;
+        int j = 0;
+        double[] res = new double[size];
+
+        for (int i = 1; i < size; i += 2) {
+            res[j++] = a[i];
+        }
+
+        for (int i = 0; i < size; i += 2) {
+            res[j++] = a[i];
+        }
+
+        return res;
+    }
+
+    /**
+     * Task: Matrix14. Дана квадратная матрица A порядка M. Начиная с элемента A[1,1],
+     * вывести ее элементы следующим образом ("уголками"): все элементы первого столбца; элементы последней строки,
+     * кроме первого (уже выведенного) элемента; оставшиеся элементы второго столбца;
+     * оставшиеся элементы предпоследней строки и т. д.; последним выводится элемент A[1,M].
+     *
+     * @param array
+     * @return
+     */
+    public static String twoDimensionArrayTask(int[][] array) {
+        ArrayList<ArrayList<Integer>> result = new ArrayList<>();
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array[0].length - i; j++) {
+                System.out.print(array[j][i] + ", ");
+            }
+
+            System.out.println();
+
+            for (int j = i + 1; j < array[0].length; j++) {
+                System.out.print(array[array[0].length - 1 - i][j] + ", ");
+            }
+
+            System.out.println();
+        }
+
+        return "";
     }
 
     public static void main(String[] args) {
-
+        twoDimensionArrayTask(new int[][]{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}});
     }
 }
