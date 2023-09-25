@@ -1,4 +1,4 @@
-package lab1.builders;
+package lab1.models.builders;
 
 import lab1.models.Group;
 

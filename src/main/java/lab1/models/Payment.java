@@ -32,9 +32,9 @@ public class Payment {
     public String toString() {
         return "Payment{" +
                 "id=" + id +
-                ", student=" + student +
-                ", group=" + group +
-                ", paymentDate=" + paymentDate +
+                ",\n\tstudent=" + student +
+                ",\n\tgroup=" + group +
+                ",\n\tpaymentDate=" + paymentDate +
                 '}';
     }
 

@@ -1,4 +1,4 @@
-package lab1.builders;
+package lab1.models.builders;
 
 public class IdGenerator {
     private int id = 1;
