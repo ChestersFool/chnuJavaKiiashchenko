@@ -50,7 +50,7 @@ public class Lab0 {
     }
 
     /**
-     * Task: Case14. Элементы равностороннего треугольника пронумерованы следующим образом:
+     * //Task: Case14. Элементы равностороннего треугольника пронумерованы следующим образом:
      * 1 — сторона a, 2 — радиус R1 вписанной окружности (R1 = a·(3)1/2/6),
      * 3 — радиус R2 описанной окружности (R2 = 2·R1), 4 — площадь S = a2·(3)1/2/4.
      * Дан номер одного из этих элементов и его значение. Вывести значения остальных
@@ -124,24 +124,25 @@ public class Lab0 {
      * Task: While14. Дано число A (> 1). Вывести наибольшее из целых чисел K,
      * для которых сумма 1 + 1/2 + … + 1/K будет меньше A, и саму эту сумму.
      *
-     * @param a
-     * @return
+     * @param a float number (<code>double</code>)
+     * @return the biggest number K and the sum of 1 + 1/2 + … + 1/K
      */
-    public static String whileTask(double a) {
+    public static double[] whileTask(double a) {
         assert a > 1 : "Argument should be more than one";
 
         int i = 1;
         double sum = 0;
 
+        //noinspection StatementWithEmptyBody
         while ((sum += (double) 1 / i++) < a) {
 //            sum += 1 / i++;
         }
 
-        return "K: " + (i - 1) + "; Sum: " + sum;
+        return new double[]{(i - 1), sum};
     }
 
     /**
-     * Task: Minmax14. Дано число B (> 0) и набор из десяти чисел. Вывести минимальный из тех элементов набора,
+     * //Task: Minmax14. Дано число B (> 0) и набор из десяти чисел. Вывести минимальный из тех элементов набора,
      * которые больше B, а также его номер. Если чисел, больших B, в наборе нет, то дважды вывести 0.
      */
     public static String minmaxTask(double b, double[] numbers) {

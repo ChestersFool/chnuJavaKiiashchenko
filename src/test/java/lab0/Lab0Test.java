@@ -33,7 +33,8 @@ public class Lab0Test {
 
     @DataProvider
     public Object[][] ifProvider() {
-        return new Object[][]{{10, 10, 10, false}, {-10, -10, -10, false}, {10, -10, -10, true}, {-10, 10, 10, false}};
+        return new Object[][]{{10, 10, 10, false},
+                {-10, -10, -10, false}, {10, -10, -10, true}, {-10, 10, 10, false}};
     }
 
     @Test
@@ -58,8 +59,8 @@ public class Lab0Test {
     @Test
     public void testForTask() {
         assertEquals(Lab0.forTask(1), List.of(1));
-        assertEquals(Lab0.forTask(2), List.of(1,4));
-        assertEquals(Lab0.forTask(3), List.of(1,4,9));
+        assertEquals(Lab0.forTask(2), List.of(1, 4));
+        assertEquals(Lab0.forTask(3), List.of(1, 4, 9));
 
     }
 
@@ -71,8 +72,14 @@ public class Lab0Test {
 
     @Test
     public void testWhileTask() {
-        assertEquals(Lab0.whileTask(1.3), "K: 2; Sum: 1.5");
-        assertEquals(Lab0.whileTask(2), "K: 4; Sum: 2.083333333333333");
+        assertEquals(Lab0.whileTask(1.3), new double[]{2., 1.5});
+        assertEquals(Lab0.whileTask(2), new double[]{4., 2.083333333333333});
+    }
+
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    @Test(expectedExceptions = AssertionError.class)
+    public void testWhileTaskNeg() {
+        Lab0.whileTask(-1.);
     }
 
     @Test
