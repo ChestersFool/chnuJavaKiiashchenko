@@ -2,6 +2,20 @@ package lab1.models.builders;
 
 import lab1.models.Group;
 
+/**
+ * This class is used to build Group objects. Fields you can set: <ul>
+ * <li>name</li>
+ * <li>subject</li>
+ * <li>teacherName</li>
+ * <li>cost</li>
+ * <li>dayOfPayment</li>
+ * <li>fromAge</li>
+ * <li>toAge</li>
+ * </ul> ID is generated automatically.
+ * Method {@link GroupBuilder#build()} returns a {@link Group} with specified parameters that you set before.
+ *
+ * @see Group
+ */
 public class GroupBuilder implements BuilderI<Group> {
     private static final IdGenerator idGenerator = new IdGenerator();
     private String name;
@@ -14,6 +28,7 @@ public class GroupBuilder implements BuilderI<Group> {
 
     public GroupBuilder() {
         cost = 0;
+        dayOfPayment = 1;
         fromAge = 5;
         toAge = 6;
     }
@@ -53,6 +68,10 @@ public class GroupBuilder implements BuilderI<Group> {
         return this;
     }
 
+    /**
+     * @return a {@link Group} with specified parameters that you set before
+     */
+    @Override
     public Group build() {
         return new Group(idGenerator.getId(), name, subject, teacherName,
                 cost, dayOfPayment, fromAge, toAge);

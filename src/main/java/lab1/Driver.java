@@ -18,7 +18,7 @@ public class Driver {
         Group group = new GroupBuilder().setName("Math").setSubject("Math").setTeacherName("Anton").build();
         Payment payment = new PaymentBuilder().setStudent(student).
                 setGroup(group).setPaymentDate(LocalDate.now()).build();
-
+        // alt + j
         System.out.println(student);
         System.out.println(student1);
         System.out.println(group);

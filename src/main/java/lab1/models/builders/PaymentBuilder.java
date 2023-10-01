@@ -6,7 +6,17 @@ import lab1.models.Student;
 
 import java.time.LocalDate;
 
-public class PaymentBuilder implements BuilderI<Payment>{
+/**
+ * This class is used to build Payment objects. Fields you can set: <ul>
+ * <li>student</li>
+ * <li>group</li>
+ * <li>paymentDate</li>
+ * </ul> ID is generated automatically.
+ * Method {@link PaymentBuilder#build()} returns a {@link Payment} with specified parameters that you set before.
+ *
+ * @see Payment
+ */
+public class PaymentBuilder implements BuilderI<Payment> {
     private static final IdGenerator idGenerator = new IdGenerator();
     private Student student;
     private Group group;
@@ -27,7 +37,11 @@ public class PaymentBuilder implements BuilderI<Payment>{
         return this;
     }
 
-    public lab1.models.Payment build() {
+    /**
+     * @return a {@link Payment} with specified parameters that you set before
+     */
+    @Override
+    public Payment build() {
         return new lab1.models.Payment(idGenerator.getId(), student, group, paymentDate);
     }
 }

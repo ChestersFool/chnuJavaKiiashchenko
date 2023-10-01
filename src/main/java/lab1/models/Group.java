@@ -2,16 +2,55 @@ package lab1.models;
 
 import java.util.Objects;
 
+/**
+ * This class represents a group.
+ */
 public class Group {
+    /**
+     * This field represents a group's id.
+     */
     private final int id;
+    /**
+     * This field represents a group's name.
+     */
     private String name;
+    /**
+     * This field represents a group's subject.
+     */
     private String subject;
+    /**
+     * This field represents a group's teacher's name.
+     */
     private String teacherName;
+    /**
+     * This field represents a group's cost.
+     */
     private double cost;
+    /**
+     * This field represents a group's day of payment.
+     */
     private int dayOfPayment;
+    /**
+     * This field represents a group's minimum age for the student.
+     */
     private int fromAge;
+    /**
+     * This field represents a group's maximum age for the student.
+     */
     private int toAge;
 
+    /**
+     * This constructor creates a group with specified parameters.
+     *
+     * @param id           group's id
+     * @param name         group's name
+     * @param subject      group's subject
+     * @param teacher      group's teacher's name
+     * @param cost         group's cost
+     * @param dayOfPayment group's day of payment
+     * @param fromAge      group's minimum age for the student.
+     * @param toAge        group's maximum age for the student.
+     */
     public Group(int id, String name, String subject, String teacher,
                  double cost, int dayOfPayment, int fromAge, int toAge) {
         this.id = id;
@@ -84,6 +123,11 @@ public class Group {
         this.toAge = toAge;
     }
 
+    /**
+     * This method returns a string representation of a group.
+     *
+     * @return a string representation of a group
+     */
     @Override
     public String toString() {
         return "Group{" +
@@ -98,6 +142,13 @@ public class Group {
                 '}';
     }
 
+    /**
+     * This method checks if two groups are equal.
+     * Compares groups by {@link Group#id}.
+     *
+     * @param o an object to be compared with this group
+     * @return true if two groups are equal, false otherwise
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -106,6 +157,11 @@ public class Group {
         return id == group.id;
     }
 
+    /**
+     * This method returns a hashcode of a group.
+     *
+     * @return a hashcode of a {@link Group#id}
+     */
     @Override
     public int hashCode() {
         return Objects.hash(id);

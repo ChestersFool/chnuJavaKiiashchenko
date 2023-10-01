@@ -3,16 +3,51 @@ package lab1.models;
 import java.time.LocalDate;
 import java.util.Objects;
 
+/**
+ * This class represents a student.
+ */
 public class Student {
+    /**
+     * This field represents a student's id.
+     */
     private final int id;
+    /**
+     * This field represents a student's name.
+     */
     private String name;
+    /**
+     * This field represents a student's surname.
+     */
     private String surname;
+    /**
+     * This field represents a student's class.
+     */
     private String studentsClass; // outer class
+    /**
+     * This field represents a student's phone number.
+     */
     private String phoneNumber;
+    /**
+     * This field represents a student's parent's phone number.
+     */
     private String parentsPhoneNumber;
+    /**
+     * This field represents a student's date of birth.
+     */
     private final LocalDate dateOfBirth;
 
-    public Student(int id,String name, String surname, String studentsClass,
+    /**
+     * This constructor creates a student with specified parameters.
+     *
+     * @param id                 student's id
+     * @param name               student's name
+     * @param surname            student's surname
+     * @param studentsClass      student's class
+     * @param phoneNumber        student's phone number
+     * @param parentsPhoneNumber student's parent's phone number
+     * @param dateOfBirth        student's date of birth
+     */
+    public Student(int id, String name, String surname, String studentsClass,
                    String phoneNumber, String parentsPhoneNumber, LocalDate dateOfBirth) {
         this.id = id;
         this.name = name;
@@ -71,8 +106,13 @@ public class Student {
         this.parentsPhoneNumber = parentsPhoneNumber;
     }
 
+    /**
+     * This method returns a string representation of a student.
+     *
+     * @return a string representation of a student
+     */
     @Override
-    public String toString(){
+    public String toString() {
         return "Student{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
@@ -84,6 +124,13 @@ public class Student {
                 '}';
     }
 
+    /**
+     * This method checks if two students are equal.
+     * Compares students by {@link Student#id}.
+     *
+     * @param o an object to be compared with this student
+     * @return true if two students are equal, false otherwise
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -92,6 +139,11 @@ public class Student {
         return id == student.id;
     }
 
+    /**
+     * This method returns a hashcode of a student.
+     *
+     * @return a hashcode of a {@link Student#id}
+     */
     @Override
     public int hashCode() {
         return Objects.hash(id);
