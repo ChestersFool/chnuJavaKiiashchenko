@@ -26,12 +26,12 @@ public class GroupBuilder implements BuilderI<Group> {
     private int fromAge;
     private int toAge;
 
-    public GroupBuilder() {
-        cost = 0;
-        dayOfPayment = 1;
-        fromAge = 5;
-        toAge = 6;
-    }
+//    public GroupBuilder() {
+//        cost = 0;
+//        dayOfPayment = 1;
+//        fromAge = 5;
+//        toAge = 6;
+//    }
 
     public GroupBuilder setName(String name) {
         this.name = name;

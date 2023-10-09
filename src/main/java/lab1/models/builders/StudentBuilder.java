@@ -26,11 +26,11 @@ public class StudentBuilder implements BuilderI<Student> {
     private String parentsPhoneNumber;
     private LocalDate dateOfBirth;
 
-    public StudentBuilder() {
-        phoneNumber = "+380900000000";
-        parentsPhoneNumber = "+380900000000";
-        dateOfBirth = LocalDate.of(2017, 1, 1);
-    }
+//    public StudentBuilder() {
+//        phoneNumber = "+380900000000";
+//        parentsPhoneNumber = "+380900000000";
+//        dateOfBirth = LocalDate.of(2017, 1, 1);
+//    }
 
     public StudentBuilder setName(String name) {
         this.name = name;

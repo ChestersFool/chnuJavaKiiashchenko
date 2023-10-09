@@ -1,7 +1,9 @@
 package lab1.models;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * This class represents a payment.
@@ -23,6 +25,7 @@ public class Payment {
      * This field represents a payment's date.
      */
     private final LocalDate paymentDate;
+//    private Set<Paym> payms; // TreeSet - sorted by date (from last to first)
 
     /**
      * This constructor creates a payment with specified parameters.

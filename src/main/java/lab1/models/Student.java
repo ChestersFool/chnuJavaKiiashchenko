@@ -1,12 +1,14 @@
 package lab1.models;
 
 import java.time.LocalDate;
+import java.util.Locale;
 import java.util.Objects;
 
 /**
  * This class represents a student.
  */
 public class Student {
+    // IDs for DB
     /**
      * This field represents a student's id.
      */
@@ -35,6 +37,11 @@ public class Student {
      * This field represents a student's date of birth.
      */
     private final LocalDate dateOfBirth;
+
+    public Student() {
+        id = 0;
+        dateOfBirth = LocalDate.now();
+    }
 
     /**
      * This constructor creates a student with specified parameters.
