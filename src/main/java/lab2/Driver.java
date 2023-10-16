@@ -4,10 +4,12 @@ import lab1.models.Student;
 import lab1.models.builders.StudentBuilder;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 public class Driver {
     public static void main(String[] args) {
-        Student student = new StudentBuilder().setName("Ivan").setSurname("Ivanov").setStudentsClass("1-A").build();
+        Student student = new StudentBuilder().setName("Ivan").setSurname("Ivanov").setStudentsClass("1-A").
+                setDateOfBirth(LocalDate.parse("2020-11-20")).build();
 
         JsonFile jsonFile = new JsonFile();
         try {

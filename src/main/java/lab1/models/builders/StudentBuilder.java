@@ -58,6 +58,9 @@ public class StudentBuilder implements BuilderI<Student> {
     }
 
     public StudentBuilder setDateOfBirth(LocalDate dateOfBirth) {
+        if (dateOfBirth == null) {
+            return this;
+        }
         this.dateOfBirth = dateOfBirth;
         return this;
     }

@@ -1,5 +1,6 @@
 package lab2;
 
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lab1.models.Student;
@@ -7,7 +8,7 @@ import lab1.models.Student;
 import java.io.File;
 import java.io.IOException;
 
-public class XMLFile implements IOFile {
+public class XMLFile implements FileIO {
     private final XmlMapper xmlMapper;
 
     XMLFile() {

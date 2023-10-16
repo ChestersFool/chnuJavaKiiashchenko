@@ -1,5 +1,7 @@
 package lab1.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.LocalDate;
 import java.util.Locale;
 import java.util.Objects;
@@ -36,6 +38,8 @@ public class Student {
     /**
      * This field represents a student's date of birth.
      */
+    @JsonFormat
+            (shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private final LocalDate dateOfBirth;
 
     public Student() {

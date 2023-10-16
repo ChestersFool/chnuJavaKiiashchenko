@@ -1,16 +1,18 @@
 package lab2;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lab1.models.Student;
 
 import java.io.File;
 import java.io.IOException;
 
-public class JsonFile implements IOFile {
+public class JsonFile implements FileIO {
     private final ObjectMapper objectMapper;
 
     JsonFile() {
         this.objectMapper = new ObjectMapper();
+        this.objectMapper.registerModule(new JavaTimeModule());
     }
 
     @Override
