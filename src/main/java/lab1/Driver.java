@@ -1,15 +1,16 @@
 package lab1;
 
+import lab1.models.Paym;
 import lab1.models.builders.GroupBuilder;
 import lab1.models.builders.PaymentBuilder;
 import lab1.models.builders.StudentBuilder;
 import lab1.models.Group;
 import lab1.models.Payment;
 import lab1.models.Student;
-import lab2.JsonFile;
 
-import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class Driver {
 
@@ -17,8 +18,13 @@ public class Driver {
         Student student = new StudentBuilder().setName("Ivan").setSurname("Ivanov").setStudentsClass("1-A").build();
         Student student1 = new StudentBuilder().setName("Ivan").setSurname("Ivanov").setStudentsClass("1-A").build();
         Group group = new GroupBuilder().setName("Math").setSubject("Math").setTeacherName("Anton").build();
+
+        Set<Paym> payms = new TreeSet<>();
+        payms.add(new Paym(LocalDate.of(2020, 10, 10), 1000, "First payment"));
+        payms.add(new Paym(LocalDate.of(2021, 11, 10), 1100, "Second payment"));
         Payment payment = new PaymentBuilder().setStudent(student).
-                setGroup(group).setPaymentDate(LocalDate.now()).build();
+                setGroup(group).setPayms(payms).build();
+
         // alt + j
         System.out.println(student);
         System.out.println(student1);

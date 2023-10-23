@@ -3,18 +3,12 @@ package lab1.models;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDate;
-import java.util.Locale;
 import java.util.Objects;
 
 /**
  * This class represents a student.
  */
 public class Student {
-    // IDs for DB
-    /**
-     * This field represents a student's id.
-     */
-    private final int id;
     /**
      * This field represents a student's name.
      */
@@ -42,15 +36,9 @@ public class Student {
             (shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private final LocalDate dateOfBirth;
 
-    public Student() {
-        id = 0;
-        dateOfBirth = LocalDate.now();
-    }
-
     /**
      * This constructor creates a student with specified parameters.
      *
-     * @param id                 student's id
      * @param name               student's name
      * @param surname            student's surname
      * @param studentsClass      student's class
@@ -58,19 +46,14 @@ public class Student {
      * @param parentsPhoneNumber student's parent's phone number
      * @param dateOfBirth        student's date of birth
      */
-    public Student(int id, String name, String surname, String studentsClass,
+    public Student(String name, String surname, String studentsClass,
                    String phoneNumber, String parentsPhoneNumber, LocalDate dateOfBirth) {
-        this.id = id;
         this.name = name;
         this.surname = surname;
         this.studentsClass = studentsClass;
         this.phoneNumber = phoneNumber;
         this.parentsPhoneNumber = parentsPhoneNumber;
         this.dateOfBirth = dateOfBirth;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public String getName() {
@@ -125,8 +108,7 @@ public class Student {
     @Override
     public String toString() {
         return "Student{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", studentsClass='" + studentsClass + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
@@ -135,29 +117,21 @@ public class Student {
                 '}';
     }
 
-    /**
-     * This method checks if two students are equal.
-     * Compares students by {@link Student#id}.
-     *
-     * @param o an object to be compared with this student
-     * @return true if two students are equal, false otherwise
-     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Student student = (Student) o;
-        return id == student.id;
+        return Objects.equals(name, student.name) && Objects.equals(surname, student.surname)
+                && Objects.equals(studentsClass, student.studentsClass)
+                && Objects.equals(phoneNumber, student.phoneNumber)
+                && Objects.equals(parentsPhoneNumber, student.parentsPhoneNumber)
+                && Objects.equals(dateOfBirth, student.dateOfBirth);
     }
 
-    /**
-     * This method returns a hashcode of a student.
-     *
-     * @return a hashcode of a {@link Student#id}
-     */
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(name, surname, studentsClass, phoneNumber, parentsPhoneNumber, dateOfBirth);
     }
 }
 

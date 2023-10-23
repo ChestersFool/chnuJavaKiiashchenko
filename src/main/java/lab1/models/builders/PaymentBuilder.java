@@ -1,10 +1,12 @@
 package lab1.models.builders;
 
 import lab1.models.Group;
+import lab1.models.Paym;
 import lab1.models.Payment;
 import lab1.models.Student;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 /**
  * This class is used to build Payment objects. Fields you can set: <ul>
@@ -17,10 +19,9 @@ import java.time.LocalDate;
  * @see Payment
  */
 public class PaymentBuilder implements BuilderI<Payment> {
-    private static final IdGenerator idGenerator = new IdGenerator();
     private Student student;
     private Group group;
-    private LocalDate paymentDate;
+    private Set<Paym> payms; // TreeSet - sorted by date (from last to first)
 
     public PaymentBuilder setStudent(Student student) {
         this.student = student;
@@ -32,8 +33,8 @@ public class PaymentBuilder implements BuilderI<Payment> {
         return this;
     }
 
-    public PaymentBuilder setPaymentDate(LocalDate paymentDate) {
-        this.paymentDate = paymentDate;
+    public PaymentBuilder setPayms(Set<Paym> payms) {
+        this.payms = payms;
         return this;
     }
 
@@ -42,6 +43,6 @@ public class PaymentBuilder implements BuilderI<Payment> {
      */
     @Override
     public Payment build() {
-        return new lab1.models.Payment(idGenerator.getId(), student, group, paymentDate);
+        return new lab1.models.Payment(student, group, payms);
     }
 }

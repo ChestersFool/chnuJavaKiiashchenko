@@ -17,7 +17,6 @@ import lab1.models.Group;
  * @see Group
  */
 public class GroupBuilder implements BuilderI<Group> {
-    private static final IdGenerator idGenerator = new IdGenerator();
     private String name;
     private String subject;
     private String teacherName;
@@ -25,13 +24,6 @@ public class GroupBuilder implements BuilderI<Group> {
     private int dayOfPayment;
     private int fromAge;
     private int toAge;
-
-//    public GroupBuilder() {
-//        cost = 0;
-//        dayOfPayment = 1;
-//        fromAge = 5;
-//        toAge = 6;
-//    }
 
     public GroupBuilder setName(String name) {
         this.name = name;
@@ -73,7 +65,7 @@ public class GroupBuilder implements BuilderI<Group> {
      */
     @Override
     public Group build() {
-        return new Group(idGenerator.getId(), name, subject, teacherName,
+        return new Group(name, subject, teacherName,
                 cost, dayOfPayment, fromAge, toAge);
     }
 }

@@ -7,10 +7,6 @@ import java.util.Objects;
  */
 public class Group {
     /**
-     * This field represents a group's id.
-     */
-    private final int id;
-    /**
      * This field represents a group's name.
      */
     private String name;
@@ -42,7 +38,6 @@ public class Group {
     /**
      * This constructor creates a group with specified parameters.
      *
-     * @param id           group's id
      * @param name         group's name
      * @param subject      group's subject
      * @param teacher      group's teacher's name
@@ -51,9 +46,8 @@ public class Group {
      * @param fromAge      group's minimum age for the student.
      * @param toAge        group's maximum age for the student.
      */
-    public Group(int id, String name, String subject, String teacher,
+    public Group(String name, String subject, String teacher,
                  double cost, int dayOfPayment, int fromAge, int toAge) {
-        this.id = id;
         this.name = name;
         this.subject = subject;
         this.teacherName = teacher;
@@ -61,10 +55,6 @@ public class Group {
         this.dayOfPayment = dayOfPayment;
         this.fromAge = fromAge;
         this.toAge = toAge;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public String getName() {
@@ -131,8 +121,7 @@ public class Group {
     @Override
     public String toString() {
         return "Group{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
                 ", subject='" + subject + '\'' +
                 ", teacherName='" + teacherName + '\'' +
                 ", cost=" + cost +
@@ -142,28 +131,19 @@ public class Group {
                 '}';
     }
 
-    /**
-     * This method checks if two groups are equal.
-     * Compares groups by {@link Group#id}.
-     *
-     * @param o an object to be compared with this group
-     * @return true if two groups are equal, false otherwise
-     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Group group = (Group) o;
-        return id == group.id;
+        return Double.compare(group.cost, cost) == 0 && dayOfPayment == group.dayOfPayment
+                && fromAge == group.fromAge && toAge == group.toAge && Objects.equals(name, group.name)
+                && Objects.equals(subject, group.subject)
+                && Objects.equals(teacherName, group.teacherName);
     }
 
-    /**
-     * This method returns a hashcode of a group.
-     *
-     * @return a hashcode of a {@link Group#id}
-     */
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(name, subject, teacherName, cost, dayOfPayment, fromAge, toAge);
     }
 }

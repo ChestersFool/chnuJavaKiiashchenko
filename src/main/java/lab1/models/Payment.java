@@ -1,7 +1,5 @@
 package lab1.models;
 
-import java.time.LocalDate;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -10,10 +8,6 @@ import java.util.Set;
  */
 public class Payment {
     /**
-     * This field represents a payment's id.
-     */
-    private final int id;
-    /**
      * This field represents a payment's student.
      */
     private final Student student;
@@ -21,29 +15,23 @@ public class Payment {
      * This field represents a payment's group.
      */
     private final Group group;
-    /**
-     * This field represents a payment's date.
-     */
-    private final LocalDate paymentDate;
-//    private Set<Paym> payms; // TreeSet - sorted by date (from last to first)
+    //    /**
+//     * This field represents a payment's date.
+//     */
+//    private final LocalDate paymentDate;
+    private Set<Paym> payms; // TreeSet - sorted by date (from last to first)
 
     /**
      * This constructor creates a payment with specified parameters.
      *
-     * @param id          payment's id
-     * @param student     payment's student
-     * @param group       payment's group
-     * @param paymentDate payment's date
+     * @param student payment's student
+     * @param group   payment's group
+     * @param payms   payments
      */
-    public Payment(int id, Student student, Group group, LocalDate paymentDate) {
-        this.id = id;
+    public Payment(Student student, Group group, Set<Paym> payms) {
         this.student = student;
         this.group = group;
-        this.paymentDate = paymentDate;
-    }
-
-    public int getId() {
-        return id;
+        this.payms = payms;
     }
 
     public Student getStudent() {
@@ -54,6 +42,10 @@ public class Payment {
         return group;
     }
 
+    public Set<Paym> getPayms() {
+        return payms;
+    }
+
     /**
      * This method returns a string representation of a payment.
      *
@@ -62,37 +54,24 @@ public class Payment {
     @Override
     public String toString() {
         return "Payment{" +
-                "id=" + id +
-                ",\n\tstudent=" + student +
+                "student=" + student +
                 ",\n\tgroup=" + group +
-                ",\n\tpaymentDate=" + paymentDate +
+                ",\n\tpayms=" + payms +
                 '}';
     }
 
-    /**
-     * This method compares two payments.
-     * Compares payments by {@link Payment#id}.
-     *
-     * @param o payment to compare
-     * @return true if payments are equal, false otherwise
-     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Payment payment = (Payment) o;
-        return id == payment.id;
+        return Objects.equals(student, payment.student) && Objects.equals(group, payment.group)
+                && Objects.equals(payms, payment.payms);
     }
 
-    /**
-     * This method returns a hashcode of a payment.
-     *
-     * @return a hashcode of a {@link Payment}
-     */
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(student, group, payms);
     }
-
 }
 
