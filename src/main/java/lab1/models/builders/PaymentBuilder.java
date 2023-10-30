@@ -7,6 +7,7 @@ import lab1.models.Student;
 
 import java.time.LocalDate;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * This class is used to build Payment objects. Fields you can set: <ul>
@@ -21,7 +22,7 @@ import java.util.Set;
 public class PaymentBuilder implements BuilderI<Payment> {
     private Student student;
     private Group group;
-    private Set<Paym> payms; // TreeSet - sorted by date (from last to first)
+    private TreeSet<Paym> payms; // TreeSet - sorted by date (from last to first)
 
     public PaymentBuilder setStudent(Student student) {
         this.student = student;
@@ -33,7 +34,7 @@ public class PaymentBuilder implements BuilderI<Payment> {
         return this;
     }
 
-    public PaymentBuilder setPayms(Set<Paym> payms) {
+    public PaymentBuilder setPayms(TreeSet<Paym> payms) {
         this.payms = payms;
         return this;
     }

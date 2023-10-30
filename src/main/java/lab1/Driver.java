@@ -19,7 +19,7 @@ public class Driver {
         Student student1 = new StudentBuilder().setName("Ivan").setSurname("Ivanov").setStudentsClass("1-A").build();
         Group group = new GroupBuilder().setName("Math").setSubject("Math").setTeacherName("Anton").build();
 
-        Set<Paym> payms = new TreeSet<>();
+        TreeSet<Paym> payms = new TreeSet<>();
         payms.add(new Paym(LocalDate.of(2020, 10, 10), 1000, "First payment"));
         payms.add(new Paym(LocalDate.of(2021, 11, 10), 1100, "Second payment"));
         Payment payment = new PaymentBuilder().setStudent(student).
