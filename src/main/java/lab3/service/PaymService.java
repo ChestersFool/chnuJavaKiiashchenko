@@ -13,9 +13,9 @@ boolean add(Paym paym);
 
     double getTotalSum();
 
-    List<Paym> byDescPart(String descPart);
+    List<Paym> byDescriptionPart(String descPart);
 
     List<Paym> maxSum();
 
-    List<Paym> sortBySum();
+    List<Paym> sortBySumDesc();
 }

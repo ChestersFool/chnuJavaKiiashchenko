@@ -31,38 +31,68 @@ public class PaymServiceClassic implements PaymService {
     @Override
     public boolean remove(int index) throws UnsupportedOperationException, ClassCastException {
         int i = 0;
+
         for (Paym paym : payms) {
             if (i == index) {
                 return payms.remove(paym);
             }
             i++;
         }
+
         return false;
     }
 
     @Override
     public double getTotalSum() {
         double sum = 0;
+
         for (Paym paym : payms) {
             sum += paym.getSum();
         }
+
         return sum;
     }
 
     @Override
-    public List<Paym> byDescPart(String descPart) {
-        List<Paym> payms = new ArrayList<>();
-        return null;
+    public List<Paym> byDescriptionPart(String descPart) {
+        List<Paym> result = new ArrayList<>();
+
+        for (Paym paym : payms) {
+            if (paym.getDescription().contains(descPart)) {
+                result.add(paym);
+            }
+        }
+
+        return result;
     }
 
     @Override
     public List<Paym> maxSum() {
-        return null;
+        List<Paym> result = new ArrayList<>();
+        double maxSum = 0;
+
+        for (Paym paym : payms) {
+            if (paym.getSum() > maxSum) {
+                maxSum = paym.getSum();
+            }
+        }
+
+        for (Paym paym : payms) {
+            if (paym.getSum() == maxSum) {
+                result.add(paym);
+            }
+        }
+
+        return result;
     }
 
     @Override
-    public List<Paym> sortBySum() {
-        return null;
+    public List<Paym> sortBySumDesc() {
+        List<Paym> result = new ArrayList<>(payms);
+
+        result.sort((o1, o2) -> (int) (o2.getSum() - o1.getSum()));
+
+        return result;
     }
 
 }

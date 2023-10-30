@@ -2,6 +2,7 @@ package lab1.models;
 
 import java.util.Objects;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * This class represents a payment.
@@ -19,7 +20,7 @@ public class Payment {
 //     * This field represents a payment's date.
 //     */
 //    private final LocalDate paymentDate;
-    private Set<Paym> payms; // TreeSet - sorted by date (from last to first)
+    private TreeSet<Paym> payms; // TreeSet - sorted by date (from last to first)
 
     /**
      * This constructor creates a payment with specified parameters.
@@ -28,7 +29,7 @@ public class Payment {
      * @param group   payment's group
      * @param payms   payments
      */
-    public Payment(Student student, Group group, Set<Paym> payms) {
+    public Payment(Student student, Group group, TreeSet<Paym> payms) {
         this.student = student;
         this.group = group;
         this.payms = payms;
