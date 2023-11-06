@@ -20,6 +20,11 @@ dependencies {
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.15.2")
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jsr310
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.15.2")
+    // https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator
+    implementation("org.hibernate.validator:hibernate-validator:8.0.1.Final")
+    // https://mvnrepository.com/artifact/org.glassfish.expressly/expressly
+    implementation("org.glassfish.expressly:expressly:5.0.0")
+
 }
 
 tasks.test {

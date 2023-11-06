@@ -9,14 +9,15 @@ import lab1.models.Payment;
 import lab1.models.Student;
 
 import java.time.LocalDate;
-import java.util.Set;
 import java.util.TreeSet;
 
 public class Driver {
 
     public static void main(String[] args) {
-        Student student = new StudentBuilder().setName("Ivan").setSurname("Ivanov").setStudentsClass("1-A").build();
-        Student student1 = new StudentBuilder().setName("Ivan").setSurname("Ivanov").setStudentsClass("1-A").build();
+        Student student = new StudentBuilder().setName("Ivan").setSurname("Ivanov").setStudentsClass("1-B")
+                .setDateOfBirth(LocalDate.parse("2004-11-20")).build();
+        Student student1 = new StudentBuilder().setName("Ivan").setSurname("Ivanov").setStudentsClass("1-A")
+                .setDateOfBirth(LocalDate.parse("2024-01-11")).setPhoneNumber("++0999999999999").build();
         Group group = new GroupBuilder().setName("Math").setSubject("Math").setTeacherName("Anton").build();
 
         TreeSet<Paym> payms = new TreeSet<>();

@@ -1,6 +1,7 @@
 package lab1.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -12,28 +13,38 @@ public class Student {
     /**
      * This field represents a student's name.
      */
+    @Pattern(regexp = "[\\pL{U}][\\pL{l}]{0,24}", message = "The name should contains only letters.")
     private String name;
     /**
      * This field represents a student's surname.
      */
+    @Pattern(regexp = "[\\pL{U}][\\pL{l}]{0,24}")
+    @NotNull(message = "Surname should be set")
     private String surname;
     /**
      * This field represents a student's class.
      */
+    @Pattern(regexp = "[\\d]-[A-Z]", message = "The class of the student should be set as 'digit'-'Upper case letter'")
     private String studentsClass; // outer class
     /**
      * This field represents a student's phone number.
      */
+    @Pattern(regexp = "[+]?[\\d]{9,20}", message = "The phone number should contains digits and/or '+'")
+    @Size(min = 10, max = 20, message = "The phone number should contains from 10 to 20 signs")
     private String phoneNumber;
     /**
      * This field represents a student's parent's phone number.
      */
+    @Pattern(regexp = "[+]?[\\d]{9,20}", message = "The phone number should contains digits and/or '+'")
+    @Size(min = 10, max = 20, message = "The phone number should contains from 10 to 20 signs")
     private String parentsPhoneNumber;
     /**
      * This field represents a student's date of birth.
      */
     @JsonFormat
             (shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @Past(message = "A birthday should be a thing of the past")
+    @NotNull(message = "DoB should be set")
     private final LocalDate dateOfBirth;
 
     /**
@@ -46,8 +57,8 @@ public class Student {
      * @param parentsPhoneNumber student's parent's phone number
      * @param dateOfBirth        student's date of birth
      */
-    public Student(String name, String surname, String studentsClass,
-                   String phoneNumber, String parentsPhoneNumber, LocalDate dateOfBirth) {
+    public Student(String name, @NotNull String surname, String studentsClass,
+                   String phoneNumber, String parentsPhoneNumber, @NotNull LocalDate dateOfBirth) {
         this.name = name;
         this.surname = surname;
         this.studentsClass = studentsClass;

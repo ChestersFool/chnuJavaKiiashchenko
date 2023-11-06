@@ -1,8 +1,13 @@
 package lab1.models.builders;
 
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
 import lab1.models.Student;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 /**
  * This class is used to build Student objects. Fields you can set: <ul>
@@ -63,7 +68,24 @@ public class StudentBuilder implements BuilderI<Student> {
      */
     @Override
     public Student build() {
-        return new Student(name, surname,
-                studentsClass, phoneNumber, parentsPhoneNumber, dateOfBirth);
+        Student student = new Student(name, surname,
+                        studentsClass, phoneNumber, parentsPhoneNumber, dateOfBirth);
+
+        try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
+            Validator validator = factory.getValidator();
+            Set<ConstraintViolation<Student>> errors = validator.validate(student);
+
+            if (!errors.isEmpty()) {
+                StringBuilder sb = new StringBuilder();
+                for (ConstraintViolation<Student> val : errors) {
+                    sb.append("InvalidValue: ").append(val.getInvalidValue()).append("; ")
+                            .append(val.getMessage()).append("\n");
+                }
+                throw new IllegalArgumentException(sb.toString());
+            }
+
+        }
+
+        return student;
     }
 }
