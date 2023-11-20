@@ -24,7 +24,8 @@ dependencies {
     implementation("org.hibernate.validator:hibernate-validator:8.0.1.Final")
     // https://mvnrepository.com/artifact/org.glassfish.expressly/expressly
     implementation("org.glassfish.expressly:expressly:5.0.0")
-
+    // https://mvnrepository.com/artifact/org.postgresql/postgresql
+    implementation("org.postgresql:postgresql:42.6.0")
 }
 
 tasks.test {
