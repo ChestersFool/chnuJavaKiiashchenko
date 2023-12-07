@@ -24,7 +24,7 @@ public class Student {
     /**
      * This field represents a student's class.
      */
-    @Pattern(regexp = "[\\d]-[A-Z]", message = "The class of the student should be set as 'digit'-'Upper case letter'")
+//    @Pattern(regexp = "[\\d]-[\\pL{l}]", message = "The class of the student should be set as 'digit'-'Upper case letter'")
     private String studentsClass; // outer class
     /**
      * This field represents a student's phone number.

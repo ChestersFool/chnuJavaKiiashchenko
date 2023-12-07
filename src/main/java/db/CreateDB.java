@@ -1,9 +1,12 @@
 package db;
 
+import lab1.models.Paym;
 import lab1.models.Student;
+import lab1.models.builders.StudentBuilder;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class CreateDB {
 
@@ -73,6 +76,8 @@ public class CreateDB {
                 id serial primary key unique not null,
                 stud_group_id int not null,
                 payment_date date not null,
+                sum numeric(10, 2) not null,
+                description varchar(100) not null,
                 constraint stud_group_id foreign key (stud_group_id) references studgroup (id)
                 on update cascade on delete cascade
                 );""");
@@ -88,35 +93,30 @@ public class CreateDB {
     }
 
     public void dropStructure() throws SQLException {
-        PreparedStatement stmt = connection
-                .prepareStatement("DROP TABLE IF EXISTS payments, studgroup, groups, students;");
-        stmt.executeUpdate();
+        try (PreparedStatement stmt = connection
+                .prepareStatement("DROP TABLE IF EXISTS payments, studgroup, groups, students;")) {
+            stmt.executeUpdate();
+        }
     }
 
     public int insertStudent(Student student) throws SQLException {
         String sql = "INSERT INTO students (name, surname, studentsclass, phonenumber, parentphonenumber, dateofbirth)" +
                 " VALUES (?, ?, ?, ?, ?, ?)";
 
-        PreparedStatement stmt = connection.prepareStatement(sql);
-        prepareStmtStudent(stmt, student);
-
-        return stmt.executeUpdate();
+        try (PreparedStatement stmt = prepareStmtStudent(sql, student)) {
+            return stmt.executeUpdate();
+        }
     }
 
-    public ArrayList<Student> readAllStudents() throws SQLException {
+    public List<Student> readAllStudents() throws SQLException {
         String sql = "SELECT * FROM students";
 
         Statement stmt = connection.createStatement();
         ResultSet resultSet = stmt.executeQuery(sql);
-        ArrayList<Student> res = new ArrayList<>();
+        List<Student> res = new ArrayList<>();
 
         while (resultSet.next()) {
-            res.add(new Student(resultSet.getString(2)
-                    , resultSet.getString(3)
-                    , resultSet.getString(4)
-                    , resultSet.getString(5)
-                    , resultSet.getString(6)
-                    , resultSet.getDate(7).toLocalDate()));
+            res.add(fromResultSet(resultSet));
         }
 
         return res;
@@ -125,53 +125,129 @@ public class CreateDB {
     public Student readStudent(int id) throws SQLException {
         String sql = "SELECT * FROM students WHERE id = ?";
 
-        PreparedStatement stmt = connection.prepareStatement(sql);
-        stmt.setInt(1, id);
-        ResultSet resultSet = stmt.executeQuery();
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            ResultSet resultSet = stmt.executeQuery();
 
-        if (resultSet.next()) {
-            return new Student(resultSet.getString(2)
-                    , resultSet.getString(3)
-                    , resultSet.getString(4)
-                    , resultSet.getString(5)
-                    , resultSet.getString(6)
-                    , resultSet.getDate(7).toLocalDate());
+            if (resultSet.next()) {
+                return fromResultSet(resultSet);
+            }
         }
+        throw new SQLException("No student with id " + id); // another
+    }
 
-        return null;
+    private Student fromResultSet(ResultSet rs) throws SQLException {
+        return new StudentBuilder()
+                .setName(rs.getString("name"))
+                .setSurname(rs.getString("surname"))
+                .setStudentsClass(rs.getString("studentsclass"))
+                .setPhoneNumber(rs.getString("phonenumber"))
+                .setParentsPhoneNumber(rs.getString("parentphonenumber"))
+                .setDateOfBirth(rs.getDate("dateofbirth").toLocalDate())
+                .build();
     }
 
     public int updateStudent(int id, Student student) throws SQLException {
         String sql = "UPDATE students SET name = ?, surname = ?, studentsclass = ?, phonenumber = ?," +
                 " parentphonenumber = ?, dateofbirth = ? WHERE id = ?";
-
-        PreparedStatement stmt = connection.prepareStatement(sql);
-        prepareStmtStudent(stmt, student);
-        stmt.setInt(7, id);
-        return stmt.executeUpdate();
+        try (PreparedStatement stmt = prepareStmtStudent(sql, student)) {
+            stmt.setInt(7, id);
+            return stmt.executeUpdate();
+        }
     }
 
     public int deleteStudent(int id) throws SQLException {
         String sql = "DELETE FROM students WHERE id = ?";
 
-        PreparedStatement stmt = connection.prepareStatement(sql);
-        stmt.setInt(1, id);
-        return stmt.executeUpdate();
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            return stmt.executeUpdate();
+        }
     }
 
     public int deleteAllStudents() throws SQLException {
         String sql = "DELETE FROM students";
 
-        PreparedStatement stmt = connection.prepareStatement(sql);
-        return stmt.executeUpdate();
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            return stmt.executeUpdate();
+        }
     }
 
-    private void prepareStmtStudent(PreparedStatement stmt, Student student) throws SQLException {
+    private PreparedStatement prepareStmtStudent(String sql, Student student) throws SQLException {
+        PreparedStatement stmt = connection.prepareStatement(sql);
+
         stmt.setString(1, student.getName());
         stmt.setString(2, student.getSurname());
         stmt.setString(3, student.getStudentsClass());
         stmt.setString(4, student.getPhoneNumber());
         stmt.setString(5, student.getParentsPhoneNumber());
         stmt.setDate(6, Date.valueOf(student.getDateOfBirth().toString()));
+
+        return stmt;
+    }
+
+    public double getTotalSum(int registrationId) throws SQLException {
+        String sql = "SELECT sum(sum) FROM payments WHERE stud_group_id = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, registrationId);
+            ResultSet resultSet = stmt.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getDouble(1);
+            }
+
+            throw new SQLException("No payments");
+        }
+    }
+
+    public List<Paym> getByDescriptionPart(String descriptionPart, int registrationId) throws SQLException {
+        String sql = "SELECT * FROM payments WHERE description LIKE ? AND stud_group_id = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, "%" + descriptionPart + "%");
+            stmt.setInt(2, registrationId);
+            ResultSet resultSet = stmt.executeQuery();
+
+            return getPaymsFromResultSet(resultSet);
+        }
+    }
+
+    public double getMaxSum(int registrationId) throws SQLException {
+        String sql = "SELECT max(sum) FROM payments WHERE stud_group_id = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, registrationId);
+            ResultSet resultSet = stmt.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getDouble(1);
+            }
+
+            throw new SQLException("No payments");
+        }
+    }
+
+    public List<Paym> getPaymsSortBySumDesc(int registrationId) throws SQLException {
+        String sql = "SELECT * FROM payments WHERE stud_group_id = ? ORDER BY sum DESC";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, registrationId);
+            ResultSet resultSet = stmt.executeQuery();
+
+            return getPaymsFromResultSet(resultSet);
+        }
+    }
+
+    private List<Paym> getPaymsFromResultSet(ResultSet resultSet) throws SQLException {
+        List<Paym> res = new ArrayList<>();
+
+        while (resultSet.next()) {
+            res.add(new Paym(resultSet.getDate("payment_date").toLocalDate(),
+                    resultSet.getDouble("sum"),
+                    resultSet.getString("description")));
+        }
+
+        return res;
     }
 }
